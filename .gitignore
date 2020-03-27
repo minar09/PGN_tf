@@ -1,5 +1,5 @@
 checkpoint/
-*Instance_part_val
+*Instance_part_val/
 output/
 logs/
 model/
