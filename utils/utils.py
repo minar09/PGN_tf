@@ -12,12 +12,35 @@ label_colours = [(0,0,0)
                 , (128,0,0), (255,0,0), (0,85,0), (170,0,51), (255,85,0), (0,0,85), (0,119,221), (85,85,0), (0,85,85), (85,51,0), (52,86,128), (0,128,0)
                 , (0,0,255), (51,170,221), (0,255,255), (85,255,170), (170,255,85), (255,255,0), (255,170,0)]
 
-# label_colours = [(0,0,0)
-#                 # 0=background
-#                 ,(128,0,0), (0,128,0), (128,128,0), (0,0,128), (128,0,128), (0,128,128)]
-#                 # 1=head, 2=torso, 3=upper arm, 4=lower arm, 5=upper leg, # 6=lower leg
+"""
+    CIHP-PGN labels
+
+        [0=Background
+         1=Hat
+         2=Hair
+         3=Glove
+         4=Sunglasses
+         5=UpperClothes
+         6=Dress
+         7=Coat
+         8=Socks
+         9=Pants
+         10=Torso-skin
+         11=Scarf
+         12=Skirt
+         13=Face
+         14=LeftArm
+         15=RightArm
+         16=LeftLeg
+         17=RightLeg
+         18=LeftShoe
+         19=RightShoe
+         ]
+"""
+
 # image mean
 IMG_MEAN = np.array((104.00698793,116.66876762,122.67891434), dtype=np.float32)
+    
     
 def decode_labels(mask, num_images=1, num_classes=21):
     """Decode batch of segmentation masks.

@@ -8,7 +8,7 @@ import scipy.misc
 import scipy.io as sio
 import cv2
 from glob import glob
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
+os.environ["CUDA_VISIBLE_DEVICES"]="0,1,2,3"
 
 import tensorflow as tf
 import numpy as np
@@ -17,11 +17,15 @@ from utils import *
 
 N_CLASSES = 20
 # DATA_DIR = './datasets/CIHP'
-DATA_DIR = 'D:/Datasets/viton_resize/test'
+# DATA_DIR = 'D:/Datasets/viton_resize/test'
+DATA_DIR = 'D:/Datasets/SeoulTechFashion/full-body-vton'
 # LIST_PATH = './datasets/CIHP/list/val.txt'
-LIST_PATH = 'D:/Datasets/viton_resize/test_pairs.txt'
+# LIST_PATH = 'D:/Datasets/viton_resize/test_pairs.txt'
+LIST_PATH = 'D:/Datasets/SeoulTechFashion/full-body-vton/full-body-trio-list.txt'
 # DATA_ID_LIST = './datasets/CIHP/list/val_id.txt'
-DATA_ID_LIST = 'D:/Datasets/viton_resize/test_pairs.txt'
+# DATA_ID_LIST = 'D:/Datasets/viton_resize/test_pairs.txt'
+DATA_ID_LIST = 'D:/Datasets/SeoulTechFashion/full-body-vton/full-body-trio-list.txt'
+
 with open(DATA_ID_LIST, 'r') as f:
     NUM_STEPS = len(f.readlines()) 
 RESTORE_FROM = './checkpoint/CIHP_pgn'
