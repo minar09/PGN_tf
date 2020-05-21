@@ -1,5 +1,5 @@
 ## Disclaimer
-This is a modified version of [CIHP-PGN](https://github.com/Engineering-Course/CIHP_PGN) github repository, for testing with custom parsing datasets.
+This is a slightly modified version of original [CIHP-PGN](https://github.com/Engineering-Course/CIHP_PGN) github repository, for testing with custom parsing datasets with visualization.
 
 ## Part Grouping Network (PGN)
 Ke Gong, Xiaodan Liang, Yicheng Li, Yimin Chen, Ming Yang and Liang Lin, "Instance-level Human Parsing via Part Grouping Network", ECCV 2018 (Oral).
