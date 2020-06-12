@@ -101,7 +101,7 @@ class Network(object):
 
     def make_w_var(self, name, shape):
         '''Creates a new TensorFlow variable.'''
-        stddev=0.01
+        stddev = 0.01
         return tf.get_variable(name, shape, initializer=tf.truncated_normal_initializer(stddev=stddev), trainable=self.trainable)
 
     def make_b_var(self, name, shape):
@@ -132,10 +132,13 @@ class Network(object):
         assert c_i % group == 0
         assert c_o % group == 0
         # Convolution for a given input and kernel
-        convolve = lambda i, k: tf.nn.conv2d(i, k, [1, s_h, s_w, 1], padding=padding)
+
+        def convolve(i, k): return tf.nn.conv2d(
+            i, k, [1, s_h, s_w, 1], padding=padding)
         with tf.variable_scope(name) as scope:
             # kernel = self.make_w_var('weights', shape=[k_h, k_w, c_i / group, c_o])
-            kernel = self.make_w_var('weights', shape=[k_h, k_w, int(c_i) / group, c_o])
+            kernel = self.make_w_var(
+                'weights', shape=[k_h, k_w, int(c_i) / group, c_o])
             if group == 1:
                 # This is the common-case. Convolve the input without any further complications.
                 output = convolve(input, kernel)
@@ -143,7 +146,8 @@ class Network(object):
                 # Split the input into groups and then convolve each of them independently
                 input_groups = tf.split(3, group, input)
                 kernel_groups = tf.split(3, group, kernel)
-                output_groups = [convolve(i, k) for i, k in zip(input_groups, kernel_groups)]
+                output_groups = [convolve(i, k) for i, k in zip(
+                    input_groups, kernel_groups)]
                 # Concatenate the groups
                 output = tf.concat(3, output_groups)
             # Add the biases
@@ -175,10 +179,13 @@ class Network(object):
         assert c_i % group == 0
         assert c_o % group == 0
         # Convolution for a given input and kernel
-        convolve = lambda i, k: tf.nn.atrous_conv2d(i, k, dilation, padding=padding)
+
+        def convolve(i, k): return tf.nn.atrous_conv2d(
+            i, k, dilation, padding=padding)
         with tf.variable_scope(name) as scope:
             # kernel = self.make_w_var('weights', shape=[k_h, k_w, c_i / group, c_o])
-            kernel = self.make_w_var('weights', shape=[k_h, k_w, int(c_i) / group, c_o])
+            kernel = self.make_w_var(
+                'weights', shape=[k_h, k_w, int(c_i) / group, c_o])
             if group == 1:
                 # This is the common-case. Convolve the input without any further complications.
                 output = convolve(input, kernel)
@@ -186,7 +193,8 @@ class Network(object):
                 # Split the input into groups and then convolve each of them independently
                 input_groups = tf.split(3, group, input)
                 kernel_groups = tf.split(3, group, kernel)
-                output_groups = [convolve(i, k) for i, k in zip(input_groups, kernel_groups)]
+                output_groups = [convolve(i, k) for i, k in zip(
+                    input_groups, kernel_groups)]
                 # Concatenate the groups
                 output = tf.concat(3, output_groups)
             # Add the biases
@@ -197,7 +205,7 @@ class Network(object):
                 # ReLU non-linearity
                 output = tf.nn.relu(output, name=scope.name)
             return output
-        
+
     @layer
     def relu(self, input, name):
         return tf.nn.relu(input, name=name)
@@ -267,7 +275,7 @@ class Network(object):
             else:
                 raise ValueError('Rank 2 tensor input expected for softmax!')
         return tf.nn.softmax(input, name)
-        
+
     @layer
     def batch_normalization(self, input, name, is_training, activation_fn=None, scale=True):
         with tf.variable_scope(name) as scope:
@@ -297,9 +305,11 @@ class Network(object):
             out_height, out_width = dims[1], dims[2]
             pool_ly = tf.nn.avg_pool(input, ksize=[1, pool_size, pool_size, 1], strides=[1, pool_size, pool_size, 1],
                                      padding=DEFAULT_PADDING, name='pool_ly')
-            weight = self.make_w_var('weights', shape=[3, 3, pool_ly.get_shape()[-1], o_c])
+            weight = self.make_w_var(
+                'weights', shape=[3, 3, pool_ly.get_shape()[-1], o_c])
             biases = self.make_var('biases', o_c)
-            conv_ly = tf.nn.conv2d(pool_ly, weight, strides=[1, 1, 1, 1], padding='SAME', name='conv_ly')
+            conv_ly = tf.nn.conv2d(pool_ly, weight, strides=[
+                                   1, 1, 1, 1], padding='SAME', name='conv_ly')
             conv_ly = tf.nn.bias_add(conv_ly, biases)
             conv_ly = tf.nn.relu(conv_ly, name='relu_ly')
             output = tf.image.resize_bilinear(conv_ly, [out_height, out_width])
