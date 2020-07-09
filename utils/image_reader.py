@@ -167,10 +167,11 @@ def read_labeled_image_list(data_dir, data_list=None):
     masks = []
 
     image_dir = None
-    mask_dir = os.path.join(data_dir, "image-parse/")
+    mask_dir = None
 
     if os.path.exists(os.path.join(data_dir, "image/")):
         image_dir = os.path.join(data_dir, "image/")
+        mask_dir = os.path.join(data_dir, "image-parse/")
     else:
         image_dir = data_dir
 
