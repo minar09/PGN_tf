@@ -61,7 +61,7 @@ def main():
         base_lr, tf.pow((1 - step_ph / NUM_STEPS), POWER))
     optim = tf.train.MomentumOptimizer(learning_rate, MOMENTUM)
 
-    for i in xrange(num_gpus):
+    for i in range(num_gpus):
         with tf.device('/gpu:%d' % i):
             with tf.name_scope('Tower_%d' % (i)) as scope:
                 if i == 0:
