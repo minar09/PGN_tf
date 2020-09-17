@@ -34,7 +34,7 @@ Edge_Pos_W = 2
 with open(DATA_ID_LIST, 'r') as f:
     TRAIN_SET = len(f.readlines())
 # save model per epoch  (number of training set / batch)
-SAVE_PRED_EVERY = TRAIN_SET / BATCH_SIZE + 1
+SAVE_PRED_EVERY = TRAIN_SET // BATCH_SIZE + 1
 NUM_STEPS = SAVE_PRED_EVERY * 100 + 1  # 100 epoch
 
 
